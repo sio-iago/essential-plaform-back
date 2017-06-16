@@ -5,13 +5,14 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-
 const fileUtils = require('./util/file-util');
+const colors = require('colors');
 
+// The express app
 const app = express();
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// Registering middlewares
+console.log('[API] Registering services\n'.white);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,7 +30,7 @@ fs.readdirSync(routesDir).forEach(file => {
   const routeName = fileUtils.removeFileExtension(file);
   const routes = require('./' + path.join(routesDir, file));
   
-  console.log('Registering /' + routeName);
+  console.log(('[APP] Registering /' + routeName).cyan);
 
   // Injecting the dependencies
   routes.services = di.services();
@@ -57,6 +58,6 @@ app.use(function(err, req, res, next) {
   res.send('Internal Error');
 });
 
-console.log('App is ready!')
+console.log('\n[API] => API is ready!'.green)
 
 module.exports = app;
