@@ -6,6 +6,7 @@
     "start": "PORT=8080 node ./bin/www"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "~1.17.1",
     "colors": "^1.1.2",
     "cookie-parser": "~1.4.3",
@@ -15,6 +16,8 @@
     "knex": "^0.13.0",
     "morgan": "~1.8.1",
     "mysql": "github:mysqljs/mysql",
-    "serve-favicon": "~2.4.2"
+    "ramda": "^0.24.1",
+    "serve-favicon": "~2.4.2",
+    "validator": "^7.0.0"
   }
 }
