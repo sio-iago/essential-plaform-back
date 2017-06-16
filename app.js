@@ -27,16 +27,16 @@ const routesDir = './routes';
 const routerService = require('./services/router');
 
 fs.readdirSync(routesDir).forEach(file => {
-  const routeName = fileUtils.removeFileExtension(file);
+  const routeName = '/api/' + fileUtils.removeFileExtension(file);
   const routes = require('./' + path.join(routesDir, file));
   
-  console.log(('[APP] Registering /' + routeName).cyan);
+  console.log(('[APP] Registering ' + routeName).cyan);
 
   // Injecting the dependencies
   routes.services = di.services();
   
   // Registering
-  routerService.registerRoutes(app, '/'+routeName, routes);
+  routerService.registerRoutes(app, routeName, routes);
 });
 
 
