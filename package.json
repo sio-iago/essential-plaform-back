@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "PORT=8080 node ./bin/www"
+    "start": "PORT=8080 node ./bin/www",
+    "bootstrap": "node bootstrap/bootstrap.js",
+    "import-fasta": "node bootstrap/import-fasta.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

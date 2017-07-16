@@ -1,3 +1,5 @@
+const process = require('process');
+
 const knex = require('knex')({
     client: 'mysql',
     connection: {
@@ -6,7 +8,7 @@ const knex = require('knex')({
         password: 'root',
         database: 'essential',
     },
-    debug: true,
+    debug: (process.env.DEBUG || false),
 });
 
 const selectAll = (table, filters) => 

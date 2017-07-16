@@ -17,6 +17,18 @@ const createUser = (db) =>
         table.timestamp('last_login', db.fn.now());
     });
 
+const createFastaInfo = (db) =>
+    db.schema.createTableIfNotExists('fasta_info', (table) => {
+        table.increments();
+        
+        table.string('tag', 100);
+
+        table.string('name', 100).unique();
+        
+        table.string('sequence', 10000);
+    });
+
 module.exports = {
     createUser: createUser,
+    createFastaInfo: createFastaInfo,
 }
