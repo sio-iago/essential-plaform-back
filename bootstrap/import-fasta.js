@@ -13,7 +13,7 @@ const fs = require('fs');
 const process = require('process');
 
 
-const FASTA_FOLDER = '/../fasta/';
+const FASTA_FOLDER = '/../files/fasta/';
 
 
 const convertToModel = (line) =>

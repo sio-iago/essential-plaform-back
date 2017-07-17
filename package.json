@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "PORT=8080 node ./bin/www",
+    "bootstrap-start": "npm run bootstrap && npm run import-fasta && DEBUG=true npm start",
     "bootstrap": "node bootstrap/bootstrap.js",
     "import-fasta": "node bootstrap/import-fasta.js"
   },

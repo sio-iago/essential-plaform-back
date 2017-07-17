@@ -1,53 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
-// Validation and crypto
-const validator = require('validator');
-const crypto = require('crypto');
-const bcrypt = require('bcryptjs');
-const salt = bcrypt.genSaltSync(10);
-const R = require('ramda');
-
-// Validations
-const hasLoginParams = user =>
-  user.username && user.password;
-
-const hasToken = user =>
-  user.token && String(user.token).trim() !== '';
-
-const isValidUser = user =>
-  hasLoginParams(user) &&
-  user.password &&
-  validator.isEmail(user.email) &&
-  validator.isLength(user.password, 6) &&
-  validator.isLength(user.username, 5);
-
-const passwordMatches = (claimer, user) =>
-  bcrypt.compareSync(claimer.password, user.password);
-
-const tokenMatches = (claimer, user) =>
-  claimer.token &&
-  user.token &&
-  claimer.token === user.token;
-
-
-// Modifiers
-const encryptPassword = user =>
-  Object.assign({}, user, {password: bcrypt.hashSync(user.password, salt)});
-
-const generateToken = user =>
-  Object.assign({}, user, {token: crypto.randomBytes(64).toString('hex')});
-
-// Creators
-const newUser = R.pipe(
-  encryptPassword,
-  generateToken
-);
-
+const userModel = require('./../model/user');
 
 // Routes
 router.post('/register', (req, res, next) => {
-  const user = isValidUser(req.body) ? newUser(req.body) : null;
+  const user = userModel.isValidUser(req.body) ? userModel.newUser(req.body) : null;
   if(user) {
     router.services.db
       .insert('users', user)
@@ -64,14 +21,14 @@ router.post('/register', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
   const claimer = req.body;
-  if(hasLoginParams(claimer)) {
+  if(userModel.hasLoginParams(claimer)) {
     router.services.db
       .selectOne('users', {username: claimer.username})
       .then(
         (users) => {
           const user = users[0];
-          if(passwordMatches(claimer, user)) {
-            const newToken = generateToken(user).token;
+          if(userModel.passwordMatches(claimer, user)) {
+            const newToken = userModel.generateToken(user).token;
             router.services.db
               .update('users', {id: user.id}, {token: newToken})
               .then(() => {
@@ -89,13 +46,13 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/validate/:token', (req, res, next) => {
-  const claimer = hasToken(req.params) ? {token: req.params.token} : null;
+  const claimer = userModel.hasToken(req.params) ? {token: req.params.token} : null;
   if(claimer) {
     router.services.db
       .selectOne('users', claimer)
       .then((users)=> {
         const user = users[0];
-        if(tokenMatches(claimer, user))
+        if(userModel.tokenMatches(claimer, user))
           res.send({token: user.token, username: user.username});
         else
           throw Error('Invalid token');

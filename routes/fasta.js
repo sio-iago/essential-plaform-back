@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const fasta = require('bionode-fasta');
-const process = require('process');
+
+const auth = require('./../middlewares/auth').default;
+router.use(auth);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
