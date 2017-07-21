@@ -1,0 +1,10 @@
+BASEDIR=$(dirname "$0")
+MAIN_DIR="$BASEDIR/../files"
+
+COMPLIANT_FASTA_DIR="$MAIN_DIR/compliantFasta"
+FILTERED_FASTA_DIR="$MAIN_DIR/filteredFasta"
+BLASTP_DIR="$MAIN_DIR/blastpData"
+ORTHOMCL_DIR="$MAIN_DIR/orthoMCL"
+
+echo "Cleaning up generated files"
+rm -rf $COMPLIANT_FASTA_DIR $FILTERED_FASTA_DIR $BLASTP_DIR $ORTHOMCL_DIR
