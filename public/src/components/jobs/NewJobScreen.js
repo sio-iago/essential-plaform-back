@@ -7,8 +7,6 @@ import { connect } from 'react-redux';
 // Main application class
 import ApplicationScreen from './../application/ApplicationScreen';
 
-// CSS for this screen
-import './DashboardScreen.css';
 
 import { Link } from 'react-router-dom';
 
@@ -20,16 +18,12 @@ import { Row, Col, Button } from 'react-bootstrap';
 const api = require('../../api/mock-api');
 
 
-class DashboardScreen extends Component {
+class NewJobScreen extends Component {
 
   render() {
     return (
       <ApplicationScreen {...this.props}>
-        <h1>Hello, {this.props.username}</h1>
-        <Link to={'/'}
-                className="btn btn-md btn-info">
-          Logout
-        </Link>
+        <h1>Create a new Job</h1>
       </ApplicationScreen>
     );
   }
@@ -40,4 +34,4 @@ const mapStateToProps = (state, ownProps) => ({
     token: state.userReducer.token,
 });
 
-export default connect(mapStateToProps, null)(DashboardScreen);
+export default connect(mapStateToProps, null)(NewJobScreen);
