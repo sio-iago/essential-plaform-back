@@ -6,7 +6,7 @@ export const initialState = {
     password: null,
 };
 
-// Enum for query actions
+// Enum for user actions
 export const USER_ACTIONS = {
     INITIAL_STATE: 'USER_INITIAL_STATE',
     
@@ -24,6 +24,9 @@ export const USER_ACTIONS = {
 
 const userReducer = (state = initialState, action) => {
     switch (action.type) {
+        case USER_ACTIONS.INITIAL_STATE:
+            return initialState;
+
         case USER_ACTIONS.UPDATE_USERNAME:
             return {...state, username : action.value};
         case USER_ACTIONS.UPDATE_EMAIL:

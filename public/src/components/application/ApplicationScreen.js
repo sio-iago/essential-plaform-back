@@ -29,7 +29,7 @@ export default class ApplicationScreen extends Component {
 
   render() {
     return (
-      <div class="dashboard-screen">
+      <div className="dashboard-screen">
         <Menu dashboardLink="/dashboard"
               newJobLink="/jobs/new"
               listJobsLink="/jobs"

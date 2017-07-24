@@ -12,7 +12,7 @@ export default class Menu extends Component {
   render() {
     return (
       <Navbar>
-        <div class="container">
+        <div className="container">
           <Navbar.Header>
             <Navbar.Brand>
               <Link to={this.props.dashboardLink}>Essential</Link>
