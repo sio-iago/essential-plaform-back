@@ -16,31 +16,12 @@ import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 // API Methods
 const api = require('../../api/mock-api');
 
-
-
+// Actions
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   
-  const form = document.getElementById('newjob');
-  const formData = new FormData(form);
-  
-  const req = new XMLHttpRequest();
-  req.onreadystatechange = () => (req.status === 200 ? console.log('WORKS!') : console.log('=/'));
-  req.open('post', form.action, true);
-  req.send(formData);
-
-  /*
-  # Uploading on server side:
-  
-  var multer  = require('multer');
-  var upload = multer({ dest: 'public/tmp' });
-
-  router.post('/upload', upload.single('fastaFile'), function(req, res, next) {
-    console.log(req.file)
-  });
-  
-  */
-
+  const formData = new FormData(evt.target);
+  api.uploadFastaFile(formData);
 };
 
 class NewJobScreen extends Component {
@@ -52,10 +33,7 @@ class NewJobScreen extends Component {
 
         <hr/>
 
-        <form id="newjob"
-              action="http://localhost:10000/upload"
-              method="POST"
-              enctype="application/x-www-form-urlencoded"
+        <form encType="application/x-www-form-urlencoded"
               onSubmit={onFormSubmit}>
           <FormGroup>
             <ControlLabel>Upload your file</ControlLabel>

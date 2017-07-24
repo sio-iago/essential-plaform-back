@@ -3,6 +3,11 @@
  */
 const store = require('../store/storeConfig').store;
 
+const PERFORM_ASYNC_REQUEST = true;
+
+const SERVER_BASE_URL = 'http://10.1.1.100:8080'
+const UPLOAD_FASTA_URL = SERVER_BASE_URL + '/api/jobs/new';
+
 const userMock = () => {
   const {
     username,
@@ -78,3 +83,18 @@ export const getJobs = () => [
     result: 'http://g1.globo.com',
   },
 ];
+
+/**
+ * Sends form data 
+ * @param {String} url 
+ * @param {FormData} formData 
+ */
+export const uploadFastaFile = (formData) => {
+  const req = new XMLHttpRequest();
+  console.log(formData);
+
+  req.onreadystatechange = () => (req.status === 200 ? console.log('WORKS!') : console.log('=/'));
+  req.open('post', UPLOAD_FASTA_URL , PERFORM_ASYNC_REQUEST);
+  // req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  req.send(formData);
+};

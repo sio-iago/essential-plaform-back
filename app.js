@@ -15,7 +15,6 @@ const app = express();
 console.log('[API] Registering services\n'.white);
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // adding services to DI service
