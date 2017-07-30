@@ -1,7 +1,10 @@
 const multer  = require('multer');
 const path = require('path');
 
+const fileUtil = require('./../util/file-util');
+
 const TEMPORARY_STORAGE_DIR = path.join(__dirname, '..', 'files', 'tmp');
+fileUtil.createIfNotExists(TEMPORARY_STORAGE_DIR);
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {

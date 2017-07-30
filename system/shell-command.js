@@ -27,9 +27,9 @@ const command = (scriptName, onDataCallback = null) =>
         onDataCallback(data);
       }
     });
-    stdout.on('end', () => resolve(results));
+    stdout.on('end', () => resolve());
 
-    stderr.on('data', data => reject(data));
+    stderr.on('data', data => onDataCallback(data));
   });
 
 /**

@@ -46,7 +46,7 @@ makeblastdb -in "$FILTERED_FASTA_DIR/goodProteins.fasta" -dbtype prot -out "$BLA
 # Running bastp
 echo "Running blastp... Drink a coffee, go for a walk and wait, cuz it'll take long!"
 
-#blastp -db "$BLASTP_DIR/blastdb.blast" -query "$FILTERED_FASTA_DIR/goodProteins.fasta" -out "$BLASTP_DIR/result.blast" -evalue 0.00001 -outfmt 6
+blastp -db "$BLASTP_DIR/blastdb.blast" -query "$FILTERED_FASTA_DIR/goodProteins.fasta" -out "$BLASTP_DIR/result.blast" -evalue 0.00001 -outfmt 6
 
 
 # Parsing Blast
@@ -65,7 +65,7 @@ orthomclLoadBlast $DB_CONFIG_FILE similarSequences.txt
 
 # Creating Pairs
 echo "Creating Pairs"
-orthomclPairs $DB_CONFIG_FILE pairs.log cleanup=no
+orthomclPairs $DB_CONFIG_FILE pairs.log cleanup=yes
 
 # Dumping Pairs
 echo "Dumping Pairs"
@@ -88,7 +88,8 @@ echo "Cleaning up tables and directories"
 
 orthomclDropSchema $DB_CONFIG_FILE
 
-# TODO: Adicionar limpeza de $BLASTP_DIR
-rm -rf $COMPLIANT_FASTA_DIR $FILTERED_FASTA_DIR $ORTHOMCL_DIR
+rm -rf $COMPLIANT_FASTA_DIR $FILTERED_FASTA_DIR $BLASTP_DIR $ORTHOMCL_DIR
 
 echo "Process done!"
+
+exit 0
