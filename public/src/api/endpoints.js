@@ -11,8 +11,9 @@ const SERVER_BASE_URL = 'http://10.1.1.100:8080'
 const LOGIN_URL = SERVER_BASE_URL + '/api/users/login';
 const REGISTER_URL = SERVER_BASE_URL + '/api/users/register';
 const VALIDATE_USER_URL = SERVER_BASE_URL + '/api/users/validate/';
-const UPLOAD_FASTA_URL = SERVER_BASE_URL + '/api/jobs/new';
 
+const CREATE_NEW_JOB_URL = SERVER_BASE_URL + '/api/jobs/new';
+const LIST_ALL_JOBS = SERVER_BASE_URL + '/api/jobs';
 
 export const register = () => {
   const {
@@ -88,36 +89,23 @@ export const validateUser = () => {
   });
 };
 
-export const getJobs = () => [
-  {
-    id: '4562',
-    label: 'Hypotesis 2',
-    date: '24/07/2017',
-    status: 'CREATED',
-    result: '',
-  },
-  {
-    id: '9854',
-    date: '20/07/2017',
-    label: 'Crazy Experiment 1',
-    status: 'COMPLETED',
-    result: 'http://www.google.com.br',
-  },
-  {
-    id: '1147',
-    label: 'Crazy Experiment 2',
-    date: '23/07/2017',
-    status: 'RUNNING',
-    result: '',
-  },
-  {
-    id: '5698',
-    date: '15/07/2017',
-    label: 'Hypotesis 1',
-    status: 'COMPLETED',
-    result: 'http://g1.globo.com',
-  },
-];
+export const getJobs = () => {
+  const token = store.getState().userReducer.token;
+  return new Promise((resolve, reject) => {
+    request
+      .get(LIST_ALL_JOBS)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .end((err, result) => {
+        if(err) {
+          reject(err);
+        }
+        else {
+          resolve(result);
+        }
+      })
+  });
+};
 
 /**
  * Sends form data 
@@ -128,10 +116,9 @@ export const uploadFastaFile = (formData) => {
   const token = store.getState().userReducer.token;
   
   const req = new XMLHttpRequest();
-  console.log(formData);
-
+  
   req.onreadystatechange = () => (req.status === 200 ? console.log('WORKS!') : console.log('=/'));
-  req.open('post', UPLOAD_FASTA_URL , PERFORM_ASYNC_REQUEST);
+  req.open('post', CREATE_NEW_JOB_URL , PERFORM_ASYNC_REQUEST);
   req.setRequestHeader('Authorization', token);
   req.send(formData);
 };

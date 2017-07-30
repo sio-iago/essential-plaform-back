@@ -17,7 +17,7 @@ const store = require('../../store/storeConfig').store;
 const isUserAuthorized = (token, history) => {
   api
     .validateUser()
-    .then(user => console.log(user.body))
+    .then(user => null)
     .catch(error => history.push('/'));
 }
 

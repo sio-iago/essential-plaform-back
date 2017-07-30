@@ -36,7 +36,9 @@ const createJobInfo = (db) =>
 
         table.string('status', 12);
         
-        table.string('filepath', 500);
+        table.string('input_file', 500);
+
+        table.string('output_file', 500);
 
         table.timestamp('created_at').defaultTo(db.fn.now());
 

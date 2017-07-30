@@ -3,6 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const fileUtils = require('./../util/file-util');
+const jobInfo = require('./../model/job-info');
 
 
 const createAndGetUsersDir = () => {
@@ -32,10 +33,11 @@ const createAndGetLoggedUserRawFastaDir = (username) => {
   return rawFastaDir;
 };
 
+// Adding security
 const auth = require('./../middlewares/auth').default;
 router.use(auth);
 
-// single('fastaFile')
+// New job request
 router.post('/new', (req, res, next) => {
   if(!req.files || !Array.isArray(req.files) || req.files.length != 1) {
     return res.status(422).send({error: 'You must upload just one file at a time!'});
@@ -43,16 +45,44 @@ router.post('/new', (req, res, next) => {
 
   const uploadedFastaFile = req.files[0];
   
-  const username = req.user.username;
+  const { username, id } = req.user;
   const rawFastaDir = createAndGetLoggedUserRawFastaDir(username);
 
   const targetFullQualifiedFileName = path.join(rawFastaDir, uploadedFastaFile.filename);
 
   fs
     .createReadStream(uploadedFastaFile.path)
-    .pipe(fs.createWriteStream(targetFullQualifiedFileName));
+    .pipe(fs.createWriteStream(targetFullQualifiedFileName))
+    .on('close', () => fs.unlink(uploadedFastaFile.path, () => null));
 
-  res.json({ok:true});
+  const newJobInfo = jobInfo.createJob(targetFullQualifiedFileName, id);
+
+  router.services.db
+    .insert('job_info', newJobInfo)
+    .then(result => res.json({ok:true}))
+    .catch(error => res.status(500).json({error: 'Error registering job on the database'}));
+});
+
+// Jobs listing request
+router.get('/', (req, res, next) => {
+  const id = req.user.id;
+
+  router.services.db
+    .selectAll('job_info', {user_id: id})
+    .then(
+      results => res.json(
+        results.map(job => 
+          Object.assign(
+            {},
+            {
+              id: job.id,
+              status: jobInfo.getStatusMask(job.status),
+              createdAt: job.created_at,
+            })
+        )
+      )
+    )
+    .catch(error => res.status(500).json({error: 'Error retrieving jobs'}));
 });
 
 module.exports = router;

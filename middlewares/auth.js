@@ -3,13 +3,19 @@
  */
 const userModel = require('./../model/user');
 const db = require('./../services/database');
+const fs = require('fs');
+const colors = require('colors');
 
 exports.default = function(req, res, next) {
 	
   const token = req.headers['authorization'];
   
   if (!token) {
-      return res.status(403).send();
+    if(req.files) {
+      console.log('[AUTH] Cleaning up unauthorized files'.red);
+      req.files.forEach(f => fs.unlink(f.path, () => console.log('[AUTH] %s cleaned!'.red, f.originalname)));
+    }
+    return res.status(403).send();
   } 
 
   const claimer = {

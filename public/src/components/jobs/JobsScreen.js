@@ -28,10 +28,19 @@ class JobsScreen extends Component {
   constructor(props) {
     super(props);
 
-    props.dispatch({
-      type: JOB_ACTIONS.JOBS_LOADED,
-      value: api.getJobs(),
-    });
+    this.loadAllJobs();
+  }
+
+  loadAllJobs = () => {
+    api
+      .getJobs()
+      .then(result => {
+        this.props.dispatch({
+          type: JOB_ACTIONS.JOBS_LOADED,
+          value: result.body,
+        });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -42,9 +51,9 @@ class JobsScreen extends Component {
         <hr />
         <DataTable keys="label"
                    columns={[
-                     {title: 'Label', prop: 'label'},
-                     {title: 'Date', prop: 'date'},
-                     {title: 'status', prop: 'status'},
+                     {title: 'Identifier', prop: 'id'},
+                     {title: 'Date Requested', prop: 'createdAt'},
+                     {title: 'Status', prop: 'status'},
                    ]}
                    initialData={this.props.jobs}
                    initialPageLength={10}
