@@ -7,17 +7,20 @@ import { connect } from 'react-redux';
 // Main application class
 import ApplicationScreen from './../application/ApplicationScreen';
 
-
 import { Link } from 'react-router-dom';
 
 // Bootstrap Classes
 import { Row, Col, Button } from 'react-bootstrap';
 
 // Data table
-import { DataTable } from 'react-data-components';
+import { JobTable } from './JobTable';
 
 // Reducers
 import { JOB_ACTIONS } from './../../reducers/jobsReducer';
+
+// FA Icons
+import 'font-awesome/css/font-awesome.min.css';
+const FontAwesome = require('react-fontawesome');
 
 // API Methods
 const api = require('../../api/endpoints');
@@ -43,21 +46,29 @@ class JobsScreen extends Component {
       .catch(err => console.log(err));
   }
 
+  getUpdateButton = () => {
+    return (
+      <Button bsStyle="info" onClick={() => this.loadAllJobs()}>
+        <FontAwesome name="refresh"></FontAwesome>
+      </Button>
+    )
+  }
+
   render() {
     
     return (
       <ApplicationScreen {...this.props}>
         <h1>My Jobs</h1>
         <hr />
-        <DataTable keys="label"
-                   columns={[
-                     {title: 'Identifier', prop: 'id'},
-                     {title: 'Date Requested', prop: 'createdAt'},
-                     {title: 'Status', prop: 'status'},
-                   ]}
-                   initialData={this.props.jobs}
-                   initialPageLength={10}
-                   initialSortBy={{prop: 'date', order: 'descending'}} />
+        <JobTable keys="label"
+                  updateButton={this.getUpdateButton()}
+                  columns={[
+                    {title: 'Identifier', prop: 'id'},
+                    {title: 'Date Requested', prop: 'createdAt'},
+                    {title: 'Status', prop: 'status'},
+                  ]}
+                  initialData={this.props.jobs}
+                  initialSortBy={{prop: 'date', order: 'descending'}} />
       </ApplicationScreen>
     );
     

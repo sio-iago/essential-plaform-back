@@ -17,11 +17,13 @@ import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 const api = require('../../api/endpoints');
 
 // Actions
-const onFormSubmit = (evt) => {
+const onFormSubmit = (evt, history) => {
   evt.preventDefault();
   
   const formData = new FormData(evt.target);
   api.uploadFastaFile(formData);
+
+  history.push('/jobs');
 };
 
 class NewJobScreen extends Component {
@@ -34,7 +36,7 @@ class NewJobScreen extends Component {
         <hr/>
 
         <form encType="application/x-www-form-urlencoded"
-              onSubmit={onFormSubmit}>
+              onSubmit={(evt) => onFormSubmit(evt,this.props.history)}>
           <FormGroup>
             <ControlLabel>Upload your file</ControlLabel>
             <input className="form-control"

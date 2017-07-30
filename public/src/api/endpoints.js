@@ -14,6 +14,7 @@ const VALIDATE_USER_URL = SERVER_BASE_URL + '/api/users/validate/';
 
 const CREATE_NEW_JOB_URL = SERVER_BASE_URL + '/api/jobs/new';
 const LIST_ALL_JOBS = SERVER_BASE_URL + '/api/jobs';
+const DOWNLOAD_JOB_RESULT = SERVER_BASE_URL + '/api/download/jobResults';
 
 export const register = () => {
   const {
@@ -106,6 +107,9 @@ export const getJobs = () => {
       })
   });
 };
+
+// URL To Download the data
+export const downloadResultUrl = (jobId) => DOWNLOAD_JOB_RESULT + '/' + jobId;
 
 /**
  * Sends form data 
