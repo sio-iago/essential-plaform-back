@@ -28,7 +28,23 @@ const createFastaInfo = (db) =>
         table.string('sequence', 10000);
     });
 
+const createJobInfo = (db) =>
+    db.schema.createTableIfNotExists('job_info', (table) => {
+        table.increments();
+        
+        table.integer('user_id').unsigned();
+
+        table.string('status', 12);
+        
+        table.string('filepath', 500);
+
+        table.timestamp('created_at').defaultTo(db.fn.now());
+
+        table.foreign('user_id').references('users.id');
+    });
+
 module.exports = {
     createUser: createUser,
     createFastaInfo: createFastaInfo,
+    createJobInfo: createJobInfo,
 }

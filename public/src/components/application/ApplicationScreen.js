@@ -8,18 +8,17 @@ import { connect } from 'react-redux';
 import Menu from './../menu/Menu';
 
 // API Methods
-const api = require('../../api/mock-api');
+const api = require('../../api/endpoints');
 
 // The store and reducer
 const store = require('../../store/storeConfig').store;
 
 // Authorization verification
 const isUserAuthorized = (token, history) => {
-  const apiResponse = api.validateUser();
-  
-  if(apiResponse.error || apiResponse.token !== token) {
-    history.push('/');
-  }
+  api
+    .validateUser()
+    .then(user => console.log(user.body))
+    .catch(error => history.push('/'));
 }
 
 export default class ApplicationScreen extends Component {

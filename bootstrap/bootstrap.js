@@ -13,16 +13,26 @@ const process = require('process');
 // Creating users table
 console.log('[BOOTSTRAP] Dropping tables'.yellow);
 Promise.all([
-    // Drops all
-    schemaDrop.dropUser(db.connection),
-    schemaDrop.dropFastaInfo(db.connection),
+    schemaDrop.dropJobInfo(db.connection),
 ])
+.then(() => {
+    return Promise.all([
+        schemaDrop.dropUser(db.connection),
+        schemaDrop.dropFastaInfo(db.connection),
+    ]);
+})
 .then(() => {
     console.log('[BOOTSTRAP] Creating tables'.yellow);
     // Creates all
     return Promise.all([
         schemaCreate.createUser(db.connection),
         schemaCreate.createFastaInfo(db.connection),
+    ]);
+})
+.then(() => {
+    // Tables with foreign keys
+    return Promise.all([
+        schemaCreate.createJobInfo(db.connection),
     ]);
 })
 .then(() => {

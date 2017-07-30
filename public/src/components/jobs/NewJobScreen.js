@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 
 // API Methods
-const api = require('../../api/mock-api');
+const api = require('../../api/endpoints');
 
 // Actions
 const onFormSubmit = (evt) => {

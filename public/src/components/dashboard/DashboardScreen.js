@@ -16,10 +16,6 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
 
 
-// API Methods
-const api = require('../../api/mock-api');
-
-
 class DashboardScreen extends Component {
 
   render() {

@@ -20,7 +20,7 @@ router.post('/register', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-  const claimer = req.body;
+  const claimer = req.body;  
   if(userModel.hasLoginParams(claimer)) {
     router.services.db
       .selectOne('users', {username: claimer.username})
@@ -39,7 +39,7 @@ router.post('/login', (req, res, next) => {
             throw Error('Invalid password');
         }
       )
-      .catch( (e) => res.send(422).send({error: 'Invalid user!'}) );
+      .catch( (e) => res.status(422).send({error: 'Invalid user!'}) );
   }
   else
     res.status(422).send({error: 'Invalid user!'});

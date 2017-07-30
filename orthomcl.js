@@ -4,8 +4,13 @@ const path = require('path');
 
 const contextPrefix = '[WATCHER]';
 
-const scriptFullQualifiedName = path.join(__dirname, 'scripts/orthomcl.sh');
-console.log(scriptFullQualifiedName);
+console.log(path.join(__dirname, "files", "users", "iago.osilva"));
+
+const scriptFullQualifiedName = path.join(__dirname, 'scripts/orthomcl.sh')
+                                + " "
+                                + path.join(__dirname, "files", "users", "iago.osilva")
+                                + " 1501377309247"
+                                + " mul";
 
 printUtil.shellDump('Starting to watch OrthoMCL jobs...', contextPrefix)
 shellCommand

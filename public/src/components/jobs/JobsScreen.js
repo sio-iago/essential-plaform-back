@@ -20,7 +20,7 @@ import { DataTable } from 'react-data-components';
 import { JOB_ACTIONS } from './../../reducers/jobsReducer';
 
 // API Methods
-const api = require('../../api/mock-api');
+const api = require('../../api/endpoints');
 
 
 class JobsScreen extends Component {

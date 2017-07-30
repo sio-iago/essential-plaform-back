@@ -4,6 +4,7 @@ export const initialState = {
     username: null,
     email: null,
     password: null,
+    error: null,
 };
 
 // Enum for user actions
@@ -14,12 +15,12 @@ export const USER_ACTIONS = {
     UPDATE_EMAIL: 'UPDATE_EMAIL',
     UPDATE_PASSWORD: 'UPDATE_PASSWORD',
     UPDATE_TOKEN: 'UPDATE_TOKEN',
-    
 
     REGISTER_USER: 'REGISTER_USER',
     LOGIN_USER: 'LOGIN_USER',
-    VERIFY_USER: 'VERIFY_USER'
-    
+    VERIFY_USER: 'VERIFY_USER',
+
+    USER_ERROR: 'USER_ERROR',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -39,8 +40,11 @@ const userReducer = (state = initialState, action) => {
         case USER_ACTIONS.REGISTER_USER:
         case USER_ACTIONS.LOGIN_USER:
         case USER_ACTIONS.VERIFY_USER:
-            return {...state, token: action.value, password: null};
+            return {...state, token: action.value, password: null, error: null};
         
+        case USER_ACTIONS.USER_ERROR:
+            return {...state, error: 'There\'s something wrong... please try again.'};
+
         default:
             return state;
     }

@@ -21,10 +21,13 @@ exports.default = function(req, res, next) {
       .selectOne('users', claimer)
       .then((users)=> {
         const user = users[0];
-        if(userModel.tokenMatches(claimer, user))
+        if(userModel.tokenMatches(claimer, user)) {
+          req.user = user;
           next();
-        else
+        }
+        else {
           throw Error('Invalid token');
+        }
       })
       .catch( (e) => res.status(422).send({error: 'Invalid user!'}));
   }

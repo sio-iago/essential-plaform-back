@@ -7,6 +7,8 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileUtils = require('./util/file-util');
 const colors = require('colors');
+const cors = require('cors')
+const fileUpload = require('./middlewares/file-upload');
 
 // The express app
 const app = express();
@@ -14,8 +16,10 @@ const app = express();
 // Registering middlewares
 console.log('[API] Registering services\n'.white);
 app.use(logger('dev'));
+app.use(fileUpload.registerAllUploadedFiles());
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(cors());
 
 // adding services to DI service
 const di = require('./services/di');

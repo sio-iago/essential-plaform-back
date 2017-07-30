@@ -1,13 +1,19 @@
 # Main Configurations
 BASEDIR=$(dirname "$0")
-MAIN_DIR="$BASEDIR/../files"
-
-CONFIG_DIR="$MAIN_DIR/config"
+BASE_FILES_DIR="$BASEDIR/../files"
+CONFIG_DIR="$BASE_FILES_DIR/config"
 DB_CONFIG_FILE="$CONFIG_DIR/orthomcl.config"
+BASE_FASTA_DIR="$BASE_FILES_DIR/rawFasta"
 
+# User specific directories
+MAIN_DIR=$1
 FASTA_DIR="$MAIN_DIR/rawFasta"
 
 echo "Starting OrthoMCL workflow"
+
+# Starting MySQL
+echo "Creating database schema"
+orthomclInstallSchema $DB_CONFIG_FILE
 
 # Adjustments
 echo "Starting Adjustments"
@@ -16,8 +22,8 @@ COMPLIANT_FASTA_DIR="$MAIN_DIR/compliantFasta"
 mkdir -p $COMPLIANT_FASTA_DIR
 cd $COMPLIANT_FASTA_DIR
 
-orthomclAdjustFasta sce "$FASTA_DIR/degaa-e-scer.fasta" 0
-orthomclAdjustFasta mul "$FASTA_DIR/multi5protozoa.fasta" 1
+orthomclAdjustFasta sce "$BASE_FASTA_DIR/degaa-e-scer.fasta" 0
+orthomclAdjustFasta $3 "$FASTA_DIR/$2.fasta" 1
 
 # Filter fasta
 echo "Filtering Proteins"
@@ -47,7 +53,7 @@ echo "Running blastp... Drink a coffee, go for a walk and wait, cuz it'll take l
 echo "Parsing blast to MCL Format"
 
 ORTHOMCL_DIR="$MAIN_DIR/orthoMCL"
-mkdir $ORTHOMCL_DIR
+mkdir -p $ORTHOMCL_DIR
 cd $ORTHOMCL_DIR
 
 orthomclBlastParser "$BLASTP_DIR/result.blast" $COMPLIANT_FASTA_DIR >> similarSequences.txt
@@ -59,7 +65,7 @@ orthomclLoadBlast $DB_CONFIG_FILE similarSequences.txt
 
 # Creating Pairs
 echo "Creating Pairs"
-orthomclPairs $DB_CONFIG_FILE pairs.log cleanup=yes
+orthomclPairs $DB_CONFIG_FILE pairs.log cleanup=no
 
 # Dumping Pairs
 echo "Dumping Pairs"
@@ -71,10 +77,18 @@ mcl mclInput --abc -I 1.5 -o mclOutput
 
 # MCL to Groups
 echo "Grouping Results"
-orthomclMclToGroups essential 1 < mclOutput > final_data.csv
+
+RESULTS_DIR="$MAIN_DIR/results"
+mkdir -p $RESULTS_DIR
+
+orthomclMclToGroups essential 1 < mclOutput > "$RESULTS_DIR/$2.csv"
 
 # The end!!!
-echo "Cleaning up tables"
-orthomclPairs $DB_CONFIG_FILE pairs.log cleanup=all
+echo "Cleaning up tables and directories"
+
+orthomclDropSchema $DB_CONFIG_FILE
+
+# TODO: Adicionar limpeza de $BLASTP_DIR
+rm -rf $COMPLIANT_FASTA_DIR $FILTERED_FASTA_DIR $ORTHOMCL_DIR
 
 echo "Process done!"
