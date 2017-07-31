@@ -7,7 +7,7 @@ const request = require('superagent');
 
 const PERFORM_ASYNC_REQUEST = true;
 
-const SERVER_BASE_URL = 'http://10.1.1.100:8080'
+const SERVER_BASE_URL = '';
 const LOGIN_URL = SERVER_BASE_URL + '/api/users/login';
 const REGISTER_URL = SERVER_BASE_URL + '/api/users/register';
 const VALIDATE_USER_URL = SERVER_BASE_URL + '/api/users/validate/';

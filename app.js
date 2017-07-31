@@ -21,6 +21,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
 
+app.use('/', express.static(path.join(__dirname, 'public', 'build')));
+
 // adding services to DI service
 const di = require('./services/di');
 di.add('db', require('./services/database'));

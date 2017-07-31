@@ -6,7 +6,8 @@
     "start": "PORT=8080 node ./bin/www",
     "bootstrap-start": "npm run bootstrap && npm run import-fasta && DEBUG=true npm start",
     "bootstrap": "node bootstrap/bootstrap.js",
-    "import-fasta": "node bootstrap/import-fasta.js"
+    "import-fasta": "node bootstrap/import-fasta.js",
+    "orthomcl": "node orthomcl.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
