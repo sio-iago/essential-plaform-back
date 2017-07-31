@@ -95,7 +95,7 @@ Once you start the server and the worker, open your browser and go to ```http://
 
 # How it works
 
-The platform works in two major steps:
+The platform works as described bellow:
 
 + A logged user send a new job request, with a fasta file to the NodeJS server.
 
