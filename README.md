@@ -10,7 +10,7 @@ To build and run the platform you must have the following dependencies installed
 
 + MySQL
 + NodeJS >= 8
-+ blasp >= 2.2.30
++ blastp >= 2.2.30
 + mcl >= 12-135
 + OrthoMCL
 
@@ -54,7 +54,7 @@ Once you set up the database configuration, run the script ```npm run bootstrap`
 In order to run the OrthoMCL job, you must install the following external dependencies and put them on the bash path (if Ubuntu, ```~/.bashrc```).
 
 + MySQL
-+ blasp
++ blastp
 + mcl
 + OrthoMCL
 
