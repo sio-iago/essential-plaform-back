@@ -22,6 +22,9 @@ const api = require('../../api/endpoints');
 const store = require('../../store/storeConfig').store;
 
 // Change handling
+const handleEmailChange = (evt) =>
+  store.dispatch({type: USER_ACTIONS.UPDATE_EMAIL, value: evt.target.value});
+
 const handleUsernameChange = (evt) =>
   store.dispatch({type: USER_ACTIONS.UPDATE_USERNAME, value: evt.target.value});
 
@@ -33,7 +36,7 @@ const handleFormSubmit = (evt, history) => {
   evt.preventDefault();
 
   api
-    .login()
+    .register()
     .then(user => {
       store.dispatch({type: USER_ACTIONS.LOGIN_USER, value: user.body.token });
       history.push('/dashboard');
@@ -45,7 +48,7 @@ const handleFormSubmit = (evt, history) => {
     });
 }
 
-class AuthenticationScreen extends Component {
+class RegistrationScreen extends Component {
 
   renderError = () => {
     return (
@@ -66,6 +69,13 @@ class AuthenticationScreen extends Component {
             {this.renderError()}
 
             <form onSubmit={evt => handleFormSubmit(evt, this.props.history)}>
+              <div className="form-group">
+                <label>Email</label>
+                <input className="form-control"
+                       type="text"
+                       value={this.props.email || ''}
+                       onChange={handleEmailChange} />
+              </div>
 
               <div className="form-group">
                 <label>Username</label>
@@ -84,16 +94,17 @@ class AuthenticationScreen extends Component {
               </div>
               
               <div className="form-group">
-                <Button bsStyle="success" className="form-control" type="submit">Login</Button>
+                <Button bsStyle="success" className="form-control" type="submit">Register</Button>
               </div>
               
-              <p style={ {textAlign:'center'} }>Or</p>
-
-              <div className="form-group">
-                <Link to={'/register'} className="btn btn-info form-control">Register</Link>
-              </div>
-
             </form>
+
+            <p style={ {textAlign:'center'} }>Or</p>
+
+            <div className="form-group">
+              <Link to={'/'} className="btn btn-info form-control">Login</Link>
+            </div>
+
           </Col>     
         </Row>
       </div>
@@ -109,4 +120,4 @@ const mapStateToProps = (state, ownProps) => ({
     error: state.userReducer.error,
 });
 
-export default connect(mapStateToProps, null)(AuthenticationScreen);
+export default connect(mapStateToProps, null)(RegistrationScreen);
