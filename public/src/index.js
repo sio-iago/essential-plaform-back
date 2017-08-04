@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import registerServiceWorker from './registerServiceWorker';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -37,4 +36,3 @@ ReactDOM.render(
 
 	document.getElementById('root')
 );
-registerServiceWorker();

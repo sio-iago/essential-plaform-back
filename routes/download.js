@@ -15,9 +15,10 @@ router.get('/jobResults/:jobId', (req, res, next) => {
 
       const fileInfo = fileUtil.getFileNameAndExtension(jobArray[0].output_file);
 
-      res.setHeader('Content-Type', 'application/file');
+      res.setHeader('Content-Type', 'text/plain');
       res.setHeader('Content-disposition', 'inline; filename=' + fileInfo.name + fileInfo.extension);
-      return fs.createReadStream(jobArray[0].output_file).pipe(res);
+      fs.createReadStream(jobArray[0].output_file).pipe(res);
+      return res;
     })
     .catch(error => res.status(404).json({error: 'Results not found!'}));
 });
