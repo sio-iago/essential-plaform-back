@@ -6,3 +6,4 @@ files/filteredFasta/**
 files/orthoMCL/**
 files/tmp/**
 files/users/**
+**/*.bak
