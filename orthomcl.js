@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const colors = require('colors');
 
@@ -12,6 +13,8 @@ const JOB_STATUS = jobInfo.JOB_STATUS;
 
 const db = require('./services/database');
 const connection = db.connection;
+
+const outputHandler = require('./util/job-utils');
 
 
 const contextPrefix = '[WATCHER]';
@@ -75,6 +78,12 @@ const watch = () => {
                       .run(scriptFullQualifiedName, printUtil.shellDump)
                       .then(() => {
                         printUtil.shellDump("OrthoMCL job done!", contextPrefix);
+
+                        const filteredResults = outputHandler
+                            .filterOnlyResultsWithMultipleOrganisms(fullQualifiedResultFilePath);
+
+                        fs.writeFileSync(fullQualifiedResultFilePath, filteredResults);
+
                         db.update(
                           'job_info',
                           {id: execution.jobInfo.id},

@@ -3,6 +3,8 @@
  */
 const colors = require('colors');
 
+const printIdentity = v => console.log(v) || v;
+
 const shellDump = (input, contextPrefix='') =>
   console.log('%s %s'.white, contextPrefix, input);
 

@@ -9,3 +9,4 @@ cd ..
 # Builds back end part
 echo "Building Back End Project"
 npm install
+npm run bootstrap
