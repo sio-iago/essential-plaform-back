@@ -16,6 +16,8 @@ const getFileNameAndExtension = fullQualifiedFilePath =>
     basedir: path.dirname(fullQualifiedFilePath),
   });
 
+const fullQualifiedFilePath = file_info => 
+  path.join(file_info.basedir, file_info.name + file_info.extension);
 
 module.exports = {
     removeFileExtension: fileName => path.parse(fileName).name,
@@ -23,4 +25,5 @@ module.exports = {
     getFilesDir: () => path.join(getProjectRoot(), 'files'),
     createIfNotExists: createIfNotExists,
     getFileNameAndExtension: getFileNameAndExtension,
+    fullQualifiedFilePath: fullQualifiedFilePath,
 };
