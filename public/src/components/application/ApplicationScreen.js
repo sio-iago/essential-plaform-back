@@ -29,9 +29,8 @@ export default class ApplicationScreen extends Component {
   render() {
     return (
       <div className="dashboard-screen">
-        <Menu dashboardLink="/dashboard"
+        <Menu dashboardLink='/dashboard'
               newJobLink="/jobs/new"
-              listJobsLink="/jobs"
               logoutLink="/" />
         <div className="container">
           {this.props.children}

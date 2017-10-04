@@ -35,7 +35,10 @@ router.get('/jobDetails/:jobId', (req, res, next) => {
     const fileName = fileUtil.fullQualifiedFilePath(fileUtil.getFileNameAndExtension(jobArray[0].output_file));
 
     jobHandler.getProteinInfoFromFileAsync(fileName)
-        .then( data => res.json(data) )
+        .then(data => res.json({
+          groups: jobHandler.getFilteredResultAsProteinValue(fileName),
+          references: data,
+        }))
         .catch(error => { console.log(error); return res.status(404).json({error: 'Results not found!'}) });
   })
   .catch(error => res.status(404).json({error: 'Results not found!'}));

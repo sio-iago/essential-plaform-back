@@ -11,9 +11,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Application Components
 import AuthenticationScreen from './components/authentication/AuthenticationScreen';
 import RegistrationScreen from './components/authentication/RegistrationScreen';
-import DashboardScreen from './components/dashboard/DashboardScreen';
 import NewJobScreen from './components/jobs/NewJobScreen';
 import JobsScreen from './components/jobs/JobsScreen';
+import JobDetailsScreen from './components/jobs/JobDetailsScreen';
 
 const store = require('./store/storeConfig').store;
 window.store = store;
@@ -27,9 +27,9 @@ ReactDOM.render(
         <Route path="/register" exact={true} component={RegistrationScreen} />
 
         {/* Application Routes */}
-        <Route path="/dashboard" exact={true} component={DashboardScreen} />
+        <Route path="/dashboard" exact={true} component={JobsScreen} />
         <Route path="/jobs/new" exact={true} component={NewJobScreen} />
-        <Route path="/jobs" exact={true} component={JobsScreen} />
+        <Route path="/job/:id" component={JobDetailsScreen} />
       </div>
     </Router>
   </Provider>,

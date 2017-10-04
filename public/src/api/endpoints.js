@@ -15,6 +15,7 @@ const VALIDATE_USER_URL = SERVER_BASE_URL + '/api/users/validate/';
 const CREATE_NEW_JOB_URL = SERVER_BASE_URL + '/api/jobs/new';
 const LIST_ALL_JOBS = SERVER_BASE_URL + '/api/jobs';
 const DOWNLOAD_JOB_RESULT = SERVER_BASE_URL + '/api/download/jobResults';
+const VIEW_JOB_DETAILS = SERVER_BASE_URL + '/api/download/jobDetails';
 
 export const register = () => {
   const {
@@ -95,6 +96,24 @@ export const getJobs = () => {
   return new Promise((resolve, reject) => {
     request
       .get(LIST_ALL_JOBS)
+      .set('Accept', 'application/json')
+      .set('Authorization', token)
+      .end((err, result) => {
+        if(err) {
+          reject(err);
+        }
+        else {
+          resolve(result);
+        }
+      })
+  });
+};
+
+export const getJob = (jobId) => {
+  const token = store.getState().userReducer.token;
+  return new Promise((resolve, reject) => {
+    request
+      .get(VIEW_JOB_DETAILS + '/' + jobId)
       .set('Accept', 'application/json')
       .set('Authorization', token)
       .end((err, result) => {

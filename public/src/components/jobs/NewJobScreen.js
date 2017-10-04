@@ -11,7 +11,11 @@ import ApplicationScreen from './../application/ApplicationScreen';
 import { Link } from 'react-router-dom';
 
 // Bootstrap Classes
-import { FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Row, Col, Button, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+
+// FA Icons
+import 'font-awesome/css/font-awesome.min.css';
+const FontAwesome = require('react-fontawesome');
 
 // API Methods
 const api = require('../../api/endpoints');
@@ -23,10 +27,18 @@ const onFormSubmit = (evt, history) => {
   const formData = new FormData(evt.target);
   api.uploadFastaFile(formData);
 
-  history.push('/jobs');
+  history.push('/dashboard');
 };
 
 class NewJobScreen extends Component {
+
+  getGoBackButton = () => {
+    return (
+      <Button bsStyle="default" onClick={ () => this.props.history.goBack() }>
+        <FontAwesome name="arrow-left"></FontAwesome> Back
+      </Button>
+    );
+  }
 
   render() {
     return (
@@ -35,20 +47,27 @@ class NewJobScreen extends Component {
 
         <hr/>
 
-        <form encType="application/x-www-form-urlencoded"
-              onSubmit={(evt) => onFormSubmit(evt,this.props.history)}>
-          <FormGroup>
-            <ControlLabel>Upload your file</ControlLabel>
-            <input className="form-control"
-                    type="file"
-                    name="fastaFile" />
-          </FormGroup>
-          <FormGroup>
-            <input type="submit"
-                    value="Start Job"
-                    className="btn btn-md btn-success" />
-          </FormGroup>
-        </form>
+        {this.getGoBackButton()}
+
+        <hr />
+
+        <Row>
+          <Col xs={12}>
+            <form encType="application/x-www-form-urlencoded"
+                  onSubmit={(evt) => onFormSubmit(evt,this.props.history)}>
+              <FormGroup>
+                <ControlLabel>Upload your file</ControlLabel>
+                <input type="file"
+                       name="fastaFile" />
+              </FormGroup>
+              <FormGroup>
+                <input type="submit"
+                        value="Start Job"
+                        className="btn btn-md btn-success" />
+              </FormGroup>
+            </form>
+          </Col>
+        </Row>
         
       </ApplicationScreen>
     );

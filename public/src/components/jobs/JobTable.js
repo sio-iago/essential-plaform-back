@@ -15,9 +15,7 @@ export class JobTable extends Component {
   }
 
   selectRow = (row) => {
-    this.setState({ selected: row.id });
-    const donwloadUrl = api.downloadResultUrl(row.id);
-    window.open(donwloadUrl, 'blank');
+    this.props.onClickRow(row);   
   }
   
   buildRowOptions = (row) => {
@@ -30,9 +28,8 @@ export class JobTable extends Component {
   render() {
     return (
       <div>
-        <p>Click on a row to download results, if available</p>
-        <p>{this.props.updateButton}</p>
-
+        <p>Click on a row to see the job details</p>
+        
         <br/>
 
         <DataTable keys="id"

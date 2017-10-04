@@ -20,19 +20,8 @@ export default class Menu extends Component {
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
-            <Nav pullLeft>
-              <NavItem eventKey={1}>
-                <Link to={this.props.dashboardLink}>Dashboard</Link>
-              </NavItem>
-              <NavItem eventKey={2}>
-                <Link to={this.props.listJobsLink}>My Jobs</Link>
-              </NavItem>
-            </Nav>
-          
             <Navbar.Form pullRight>
               <FormGroup>
-                <Link className="btn btn-md btn-success" to={this.props.newJobLink}>New Job</Link>
-                {' '}
                 <Link className="btn btn-md btn-danger" to={this.props.logoutLink}>
                   Logout
                 </Link>

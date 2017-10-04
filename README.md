@@ -109,8 +109,6 @@ The platform works as described bellow:
 # TODO
 
 + Add more DEG files and let the user pick one.
-+ Print user friendly output.
-+ Integration with bionode for ncbi urls.
 
 + Evaluation by trying to configure OrthoMCL manually versus using the platform
 

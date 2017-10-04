@@ -49,9 +49,17 @@ class JobsScreen extends Component {
   getUpdateButton = () => {
     return (
       <Button bsStyle="info" onClick={() => this.loadAllJobs()}>
-        <FontAwesome name="refresh"></FontAwesome>
+        <FontAwesome name="refresh"></FontAwesome> Refresh
       </Button>
     )
+  }
+
+  getNewJobButton = () => {
+    return (
+      <Link className="btn btn-md btn-warning" to='/jobs/new'>
+        <FontAwesome name="plus"></FontAwesome> New Job
+      </Link>
+    );
   }
 
   render() {
@@ -59,16 +67,26 @@ class JobsScreen extends Component {
     return (
       <ApplicationScreen {...this.props}>
         <h1>My Jobs</h1>
+        
         <hr />
+
+        {this.getUpdateButton()}
+
+        <span> </span>
+
+        {this.getNewJobButton()}
+
+        <hr />
+
         <JobTable keys="label"
-                  updateButton={this.getUpdateButton()}
                   columns={[
                     {title: 'Identifier', prop: 'id'},
                     {title: 'Date Requested', prop: 'createdAt'},
                     {title: 'Status', prop: 'status'},
                   ]}
                   initialData={this.props.jobs}
-                  initialSortBy={{prop: 'date', order: 'descending'}} />
+                  initialSortBy={{prop: 'date', order: 'descending'}}
+                  onClickRow={ (row) => this.props.history.push('/job/' + row.id)} />
       </ApplicationScreen>
     );
     

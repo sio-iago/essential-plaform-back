@@ -14,6 +14,8 @@ const splitOnWhitespace = field => field.split(' ');
 const asKeyValuePair = field =>
     Object.assign({}, { key: field.split('|')[0], value: field.split("|")[1] })
 
+const asProteinValue = field => asKeyValuePair(field).value;
+
 const firstBeforeBarSeparator = field => asKeyValuePair(field).key;
 
 const identityOrFalse = (previous, value) => (value !== previous ? false : value)
@@ -24,6 +26,8 @@ const hasMultipleKeysBeforeBarSeparator = vec =>
 const joinResults = vec => vec.join(' ');
 
 const mapVecOfStringsToKeyValuePair = vec => vec.map(asKeyValuePair);
+
+const mapVecOfStringsToProteinValue = vec => vec.map(asProteinValue);
 
 
 const filterOnlyResultsWithMultipleOrganisms = file_name =>
@@ -44,6 +48,12 @@ const getFilteredResultAsKeyValuePairs = file_name =>
         .map(splitOnWhitespace)
         .map(mapVecOfStringsToKeyValuePair);
 
+const getFilteredResultAsProteinValue = file_name =>
+    fs.readFileSync(file_name, 'UTF-8')
+        .split('\n')
+        .filter(isBlank)
+        .map(splitOnWhitespace)
+        .map(mapVecOfStringsToProteinValue);
 
 const getProteinInfoAsync = protein_id =>
     new Promise((resolve, reject) =>
@@ -77,5 +87,6 @@ const getProteinInfoFromFileAsync = file_name =>
 module.exports = {
     filterOnlyResultsWithMultipleOrganisms: filterOnlyResultsWithMultipleOrganisms,
     getFilteredResultAsKeyValuePairs: getFilteredResultAsKeyValuePairs,
+    getFilteredResultAsProteinValue: getFilteredResultAsProteinValue,
     getProteinInfoFromFileAsync: getProteinInfoFromFileAsync
 };

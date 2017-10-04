@@ -1,9 +1,11 @@
 // Initial state
 export const initialState = {
     jobs: [],
+    job: null,
     jobLabel: '',
     jobFilePath: '',
     jobError: false,
+    jobLoading: false,
 };
 
 // Enum for job actions
@@ -16,6 +18,10 @@ export const JOB_ACTIONS = {
     LOADING_JOBS: 'LOADING_JOBS',
     JOBS_LOADED: 'JOBS_LOADED',
     JOBS_ERROR: 'JOBS_ERROR',
+
+    LOADING_JOB: 'LOADING_JOB',
+    JOB_LOADED: 'JOB_LOADED',
+    JOB_ERROR: 'JOB_ERROR',
    
     START_JOB: 'START_JOB',    
 };
@@ -35,6 +41,13 @@ const jobsReducer = (state = initialState, action) => {
     case JOB_ACTIONS.JOBS_LOADED:
       return {...state, jobs: action.value, jobError: false};
     
+    case JOB_ACTIONS.LOADING_JOB:
+      return {...state, jobError : false, job: null, jobLoading: true};
+    case JOB_ACTIONS.JOB_LOADED:
+      return {...state, job: action.value, jobError: false, jobLoading: false};
+    
+
+    case JOB_ACTIONS.JOB_ERROR:
     case JOB_ACTIONS.JOBS_ERROR:
       return {...state, jobError: true};
 
