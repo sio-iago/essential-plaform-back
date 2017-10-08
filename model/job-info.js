@@ -14,9 +14,10 @@ const JOB_STATUS_MASK = {
 
 const getStatusMask = status => JOB_STATUS_MASK[status];
 
-const createJob = (filePath, userId) =>
+const createJob = (filePath, organism, userId) =>
   Object.assign({}, {
     input_file: filePath,
+    organism: organism,
     user_id: userId,
     status: JOB_STATUS.NEW_JOB,
   });

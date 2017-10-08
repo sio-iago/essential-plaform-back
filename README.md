@@ -105,13 +105,6 @@ The platform works as described bellow:
 
 + The logged user goes to the "My Jobs" table and clicks on the Job row. If the job is finished with the "Success" status, the server sends the result file to the client.
 
-
-# TODO
-
-+ Add more DEG files and let the user pick one.
-
-+ Evaluation by trying to configure OrthoMCL manually versus using the platform
-
 # License
 
 The platform is under the MIT license.

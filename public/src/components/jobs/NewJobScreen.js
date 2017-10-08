@@ -56,6 +56,12 @@ class NewJobScreen extends Component {
             <form encType="application/x-www-form-urlencoded"
                   onSubmit={(evt) => onFormSubmit(evt,this.props.history)}>
               <FormGroup>
+                <FormGroup>
+                  <ControlLabel>Select An Organism</ControlLabel>
+                  <select name="organism" className="form-control">
+                    <option value="degaa-e-scer.fasta">SCE - Saccharomyces Cerevisiae</option>
+                  </select>
+                </FormGroup>
                 <ControlLabel>Upload your file</ControlLabel>
                 <input type="file"
                        name="fastaFile" />

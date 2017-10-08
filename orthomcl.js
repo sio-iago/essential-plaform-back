@@ -37,12 +37,14 @@ const changeJobStatusToRunning = job =>
   db.update('job_info', { id: job.id }, Object.assign(job, { status: JOB_STATUS.RUNNING }));
 
 const getExecutionInfo = nextJob => {
-  console.log('%s Running job @%s', contextPrefix, nextJob.id);
+  console.log('%s Running job @%s targeting ${ %s }', contextPrefix, nextJob.id, nextJob.organism);
 
   const inputFileInfo = fileUtil.getFileNameAndExtension(nextJob.input_file);
+  const organismFileArray = nextJob.organism.split('/');
 
   return {
     jobInfo: nextJob,
+    organism: organismFileArray[organismFileArray.length-1],
     inputFileInfo: inputFileInfo
   };
 }
@@ -72,7 +74,8 @@ const watch = () => {
                     const scriptFullQualifiedName = orthoMCLBasePath
                                                         + ' ' + baseUserDirectory
                                                         + ' ' + execution.inputFileInfo.name
-                                                        + ' ' + execution.inputFileInfo.name.substr(0, 3);
+                                                        + ' ' + execution.inputFileInfo.name.substr(0, 3)
+                                                        + ' ' + execution.organism;
 
                     shellCommand
                       .run(scriptFullQualifiedName, printUtil.shellDump)

@@ -43,6 +43,8 @@ router.post('/new', (req, res, next) => {
     return res.status(422).send({error: 'You must upload just one file at a time!'});
   }
 
+  const organism = req.body.organism;
+
   const uploadedFastaFile = req.files[0];
   
   const { username, id } = req.user;
@@ -55,7 +57,7 @@ router.post('/new', (req, res, next) => {
     .pipe(fs.createWriteStream(targetFullQualifiedFileName))
     .on('close', () => fs.unlink(uploadedFastaFile.path, () => null));
 
-  const newJobInfo = jobInfo.createJob(targetFullQualifiedFileName, id);
+  const newJobInfo = jobInfo.createJob(targetFullQualifiedFileName, organism, id);
 
   router.services.db
     .insert('job_info', newJobInfo)
