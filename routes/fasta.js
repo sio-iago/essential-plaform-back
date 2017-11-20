@@ -1,26 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('./../middlewares/auth').default;
-router.use(auth);
-
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  
-  const sequencesQuery = req.query.seq || '';
-  const name = req.query.name || '' ;
+router.get('/:degId', function(req, res, next) {
 
-  const sequence = sequencesQuery && Array.isArray(sequencesQuery) ? sequencesQuery[0] : sequencesQuery;
-  
-  if(sequence.length === 0 && name.length === 0) {
-    return res.status(422).send({error: 'You must provide a name or sequence (seq) param.'});
+  const degId = req.params.degId || '' ;
+
+  if(degId.length === 0) {
+    return res.status(422).send({error: 'You must provide a degId.'});
   }
 
   router.services.db.connection.select()
-      .from('fasta_info')
-      .where('name', 'like', '%'+name)
-      .andWhere('sequence','like','%'+sequence+'%')
-    .then((results) => res.send(results))
+      .from('fasta_annotation')
+      .where('degId', degId)
+    .then((results) => results.length > 0 ? res.send(results[0]) : res.send(null))
     .catch((err)=> {
       console.log(err);
       return res.status(500).send({error: 'Something bad happened!'})

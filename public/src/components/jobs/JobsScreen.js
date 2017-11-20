@@ -32,6 +32,7 @@ class JobsScreen extends Component {
     super(props);
 
     this.loadAllJobs();
+    setInterval(this.loadAllJobs, 5000);
   }
 
   loadAllJobs = () => {
@@ -44,7 +45,7 @@ class JobsScreen extends Component {
         });
       })
       .catch(err => console.log(err));
-  }
+  };
 
   getUpdateButton = () => {
     return (
@@ -52,7 +53,7 @@ class JobsScreen extends Component {
         <FontAwesome name="refresh"></FontAwesome> Refresh
       </Button>
     )
-  }
+  };
 
   getNewJobButton = () => {
     return (
@@ -60,7 +61,7 @@ class JobsScreen extends Component {
         <FontAwesome name="plus"></FontAwesome> New Job
       </Link>
     );
-  }
+  };
 
   render() {
     
@@ -90,7 +91,7 @@ class JobsScreen extends Component {
       </ApplicationScreen>
     );
     
-  }
+  };
 }
 
 const mapStateToProps = (state, ownProps) => ({

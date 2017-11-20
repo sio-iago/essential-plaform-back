@@ -17,15 +17,20 @@ const createUser = (db) =>
         table.timestamp('last_login', db.fn.now());
     });
 
-const createFastaInfo = (db) =>
-    db.schema.createTableIfNotExists('fasta_info', (table) => {
+const createFastaAnnotation = (db) =>
+    db.schema.createTableIfNotExists('fasta_annotation', (table) => {
         table.increments();
 
-        table.string('tag', 100);
+        table.string('degPrefix', 20);
 
-        table.string('name', 100).unique();
+        table.string('degId', 40).unique();
 
-        table.string('sequence', 10000);
+        table.string('geneName', 100);
+        table.string('geneRef', 100);
+
+        table.string('degFunction', 1000);
+
+        table.string('organism', 200);
     });
 
 const createJobInfo = (db) =>
@@ -49,6 +54,6 @@ const createJobInfo = (db) =>
 
 module.exports = {
     createUser: createUser,
-    createFastaInfo: createFastaInfo,
+    createFastaAnnotation: createFastaAnnotation,
     createJobInfo: createJobInfo,
 };

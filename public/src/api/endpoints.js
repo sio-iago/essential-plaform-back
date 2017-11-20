@@ -7,7 +7,7 @@ const request = require('superagent');
 
 const PERFORM_ASYNC_REQUEST = true;
 
-const SERVER_BASE_URL = '';
+const SERVER_BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:8080' : '';
 const LOGIN_URL = SERVER_BASE_URL + '/api/users/login';
 const REGISTER_URL = SERVER_BASE_URL + '/api/users/register';
 const VALIDATE_USER_URL = SERVER_BASE_URL + '/api/users/validate/';
@@ -16,6 +16,8 @@ const CREATE_NEW_JOB_URL = SERVER_BASE_URL + '/api/jobs/new';
 const LIST_ALL_JOBS = SERVER_BASE_URL + '/api/jobs';
 const DOWNLOAD_JOB_RESULT = SERVER_BASE_URL + '/api/download/jobResults';
 const VIEW_JOB_DETAILS = SERVER_BASE_URL + '/api/download/jobDetails';
+
+const GET_FASTA_ANNOTATION_INFO = SERVER_BASE_URL + '/api/fasta/';
 
 export const register = () => {
   const {
@@ -50,6 +52,8 @@ export const login = () => {
     username,
     password
   } = store.getState().userReducer;
+
+  console.log(LOGIN_URL);
 
   return new Promise((resolve, reject) => {
     request
@@ -126,6 +130,23 @@ export const getJob = (jobId) => {
       })
   });
 };
+
+export const getFastaAnnotationInfo = (degId) => {
+    return new Promise((resolve, reject) => {
+        request
+            .get(GET_FASTA_ANNOTATION_INFO + '/' + degId)
+            .set('Accept', 'application/json')
+            .end((err, result) => {
+                if(err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            })
+    });
+};
+
 
 // URL To Download the data
 export const downloadResultUrl = (jobId) => DOWNLOAD_JOB_RESULT + '/' + jobId;

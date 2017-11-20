@@ -1,4 +1,5 @@
 /**
+ *
  * Bootstraps the application.
  * 
  * Run just the first time you
@@ -18,7 +19,7 @@ Promise.all([
 .then(() => {
     return Promise.all([
         schemaDrop.dropUser(db.connection),
-        schemaDrop.dropFastaInfo(db.connection),
+        schemaDrop.dropFastaAnnotation(db.connection),
     ]);
 })
 .then(() => {
@@ -26,7 +27,7 @@ Promise.all([
     // Creates all
     return Promise.all([
         schemaCreate.createUser(db.connection),
-        schemaCreate.createFastaInfo(db.connection),
+        schemaCreate.createFastaAnnotation(db.connection),
     ]);
 })
 .then(() => {
@@ -43,6 +44,3 @@ Promise.all([
     console.log(('[BOOTSTRAP] Error: ' + err.toString()).red);
     process.exit(255);
 });
-
-
-

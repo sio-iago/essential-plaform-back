@@ -5,14 +5,14 @@
 const dropUser = (db) =>
     db.schema.dropTableIfExists('users');
 
-const dropFastaInfo = (db) =>
-    db.schema.dropTableIfExists('fasta_info');
+const dropFastaAnnotation = (db) =>
+    db.schema.dropTableIfExists('fasta_annotation');
 
 const dropJobInfo = (db) =>
     db.schema.dropTableIfExists('job_info');
 
 module.exports = {
     dropUser: dropUser,
-    dropFastaInfo: dropFastaInfo,
+    dropFastaAnnotation: dropFastaAnnotation,
     dropJobInfo: dropJobInfo,
-}
+};
