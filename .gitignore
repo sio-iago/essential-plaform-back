@@ -7,3 +7,4 @@ files/orthoMCL/**
 files/tmp/**
 files/users/**
 **/*.bak
+.idea/**

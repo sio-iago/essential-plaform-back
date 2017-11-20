@@ -59,7 +59,9 @@ class NewJobScreen extends Component {
                 <FormGroup>
                   <ControlLabel>Select An Organism</ControlLabel>
                   <select name="organism" className="form-control">
-                    <option value="degaa-e-scer.fasta">SCE - Saccharomyces Cerevisiae</option>
+                    <option value="degaa-e-scer.fasta">Saccharomyces cerevisiae</option>
+                    <option value="degaa-e-dani.fasta">Danio Rerio</option>
+                    <option value="degaa-e-eleg.fasta">Caenorhabditis elegans</option>
                   </select>
                 </FormGroup>
                 <ControlLabel>Upload your file</ControlLabel>
