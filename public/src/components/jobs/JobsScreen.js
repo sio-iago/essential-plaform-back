@@ -32,8 +32,12 @@ class JobsScreen extends Component {
     super(props);
 
     this.loadAllJobs();
-    setInterval(this.loadAllJobs, 5000);
+    this.checkInterval = setInterval(this.loadAllJobs, 5000);
   }
+
+  componentWillUnmount = () => {
+    clearInterval(this.checkInterval);
+  };
 
   loadAllJobs = () => {
     api

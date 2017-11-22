@@ -17,7 +17,7 @@ const LIST_ALL_JOBS = SERVER_BASE_URL + '/api/jobs';
 const DOWNLOAD_JOB_RESULT = SERVER_BASE_URL + '/api/download/jobResults';
 const VIEW_JOB_DETAILS = SERVER_BASE_URL + '/api/download/jobDetails';
 
-const GET_FASTA_ANNOTATION_INFO = SERVER_BASE_URL + '/api/fasta/';
+const GET_FASTA_ANNOTATION_INFO = SERVER_BASE_URL + '/api/fasta';
 
 export const register = () => {
   const {

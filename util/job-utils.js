@@ -55,14 +55,15 @@ const getFilteredResultAsProteinValue = file_name =>
         .map(splitOnWhitespace)
         .map(mapVecOfStringsToProteinValue);
 
-const getProteinInfoAsync = protein_id =>
-    new Promise((resolve, reject) =>
-        request(BIONODE_BASE_URL + protein_id, { followRedirect: false }, (err, response, body) => {
-            const result = {};
-            result[protein_id] = (err || response.statusCode !== 200) ? null : BIONODE_BASE_URL + protein_id;
-            
-            resolve(result);
-        }));
+const getProteinInfo = protein_id => {
+    let proteinInfo = null;
+    if (!protein_id.includes('DEG')) {
+        proteinInfo = {};
+        proteinInfo[protein_id] = BIONODE_BASE_URL + protein_id;
+    }
+
+    return proteinInfo;
+};
 
 const getProteinInfoFromFileAsync = file_name =>
     new Promise((resolve, reject) => {
@@ -70,17 +71,16 @@ const getProteinInfoFromFileAsync = file_name =>
         
         const uniqueIds = {};
         
-        for(index in infoList) {
+        for (let index=0; index<infoList.length; index++) {
             uniqueIds[infoList[index].value] = true;
         }
 
-        const promises = [];
-        for(key in uniqueIds) {
-            promises.push(getProteinInfoAsync(key));
+        const references = [];
+        for(let key in uniqueIds) {
+            references.push(getProteinInfo(key));
         }
 
-        Promise.all(promises)
-            .then(results => resolve(results));
+        resolve(references.filter(v => v !== null && v[Object.keys(v)[0]] !== null));
     });
 
 
