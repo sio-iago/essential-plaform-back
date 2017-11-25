@@ -53,7 +53,7 @@ const jobsReducer = (state = initialState, action) => {
             return {...state, job: action.value, jobError: false, jobLoading: false};
 
         case JOB_ACTIONS.PROTEIN_INFO:
-            return {...state, proteinInfo: action.value, toggleProteinInfoModal: true};
+            return {...state, proteinInfo: (action.value ? action.value : {}), toggleProteinInfoModal: true};
         case JOB_ACTIONS.CLOSE_PROTEIN_MODAL:
             return {...state, proteinInfo: {}, toggleProteinInfoModal: false};
 
