@@ -10,6 +10,7 @@ const fileUtil = require('./util/file-util');
 const jobInfo = require('./model/job-info');
 const JOB_STATUS = jobInfo.JOB_STATUS;
 
+const BASE_FASTA_DIR = path.join(__dirname, "files", "rawFasta");
 
 const db = require('./services/database');
 const connection = db.connection;
@@ -40,14 +41,19 @@ const getExecutionInfo = nextJob => {
   console.log('%s Running job @%s targeting ${ %s }', contextPrefix, nextJob.id, nextJob.organism);
 
   const inputFileInfo = fileUtil.getFileNameAndExtension(nextJob.input_file);
-  const organismFileArray = nextJob.organism.split('/');
+
+  const organismFileArray = (nextJob.multi_file ? nextJob.organism : nextJob.organism.split('/'));
+
+  const organismFile = Array.isArray(organismFileArray)
+      ? path.join(BASE_FASTA_DIR, organismFileArray[organismFileArray.length-1])
+      : organismFileArray;
 
   return {
     jobInfo: nextJob,
-    organism: organismFileArray[organismFileArray.length-1],
+    organism: organismFile,
     inputFileInfo: inputFileInfo
   };
-}
+};
 
 const watch = () => {
   console.log('%s Watching for new Jobs...'.white, contextPrefix);

@@ -57,14 +57,17 @@ class NewJobScreen extends Component {
                   onSubmit={(evt) => onFormSubmit(evt,this.props.history)}>
               <FormGroup>
                 <FormGroup>
-                  <ControlLabel>Select An Organism</ControlLabel>
+                  <ControlLabel>Select A Model Organism or Upload Your Own</ControlLabel>
                   <select name="organism" className="form-control">
+                    <option value=""></option>
                     <option value="degaa-e-scer.fasta">Saccharomyces cerevisiae</option>
                     <option value="degaa-e-dani.fasta">Danio Rerio</option>
                     <option value="degaa-e-eleg.fasta">Caenorhabditis elegans</option>
                   </select>
+                  <input type="file"
+                         name="modelFile" />
                 </FormGroup>
-                <ControlLabel>Upload your file</ControlLabel>
+                <ControlLabel>Upload your target organism file</ControlLabel>
                 <input type="file"
                        name="fastaFile" />
               </FormGroup>

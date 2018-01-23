@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Main Configurations
 BASEDIR=$(dirname "$0")
 BASE_FILES_DIR="$BASEDIR/../files"
@@ -22,7 +23,7 @@ COMPLIANT_FASTA_DIR="$MAIN_DIR/compliantFasta"
 mkdir -p $COMPLIANT_FASTA_DIR
 cd $COMPLIANT_FASTA_DIR
 
-orthomclAdjustFasta sce "$BASE_FASTA_DIR/$4" 0
+orthomclAdjustFasta mod "$4" 0
 orthomclAdjustFasta $3 "$FASTA_DIR/$2.fasta" 1
 
 # Filter fasta

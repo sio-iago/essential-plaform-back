@@ -45,6 +45,8 @@ const createJobInfo = (db) =>
 
         table.string('organism', 100);
 
+        table.boolean('multi_file', false);
+
         table.string('output_file', 500);
 
         table.timestamp('created_at').defaultTo(db.fn.now());
