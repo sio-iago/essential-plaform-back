@@ -19,9 +19,9 @@ cd /software \
     && rm orthomclSoftware-v2.0.9.tar.gz
 
 # Setup the OrthoMCL paths
-echo "\nexport PATH=$PATH:/software/blast-2.2.26/bin\n" >> ~/.bashrc
-echo "export PATH=$PATH:/software/mcl/bin\n" >> ~/.bashrc
-echo "export PATH=$PATH:/software/orthomclSoftware-v2.0.9/bin\n" >> ~/.bashrc
+echo "export PATH=$PATH:/software/blast-2.2.26/bin" >> ~/.bashrc
+echo "export PATH=$PATH:/software/mcl/bin" >> ~/.bashrc
+echo "export PATH=$PATH:/software/orthomclSoftware-v2.0.9/bin" >> ~/.bashrc
 
 # Copy the orthomcl config file
 cp /home/vagrant/platform/files/config/orthomcl.config /software/orthomcl.config
@@ -61,15 +61,17 @@ echo "Changing to vagrant user to start booting up Essential Platform"
 sudo -u vagrant -i
 
 # Source the bashrc
-source ~/.bashrc
+source /home/vagrant/.bashrc
 
-# Build the application
-echo "Building the platform"
-chmod 777 -R /home/vagrant/platform/*
-cd /home/vagrant/platform
-./build.sh
+# ===== Build the application ====== #
 
-# Start the services
-echo "Starting the platform"
-npm start &
-npm run orthomcl &
+# echo "Building the platform"
+# cd /home/vagrant/platform
+# ./build.sh
+
+
+# ======= Start the services ======= #
+
+# echo "Starting the platform"
+# npm start &
+# npm run orthomcl &
