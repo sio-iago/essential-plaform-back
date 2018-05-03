@@ -7,4 +7,9 @@ files/orthoMCL/**
 files/tmp/**
 files/users/**
 **/*.bak
-.idea/**
+.idea
+.vagrant
+.nvm
+.bashrc
+**/**.skip
+.cache
